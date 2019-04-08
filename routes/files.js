@@ -16,7 +16,7 @@ var storage = multer.diskStorage({
 
 var upload = multer({ storage: storage })
 
-router.post('/upload', ensureAuthenticated, upload.single('myFile'), (req, res) => {
+router.post('/upload', ensureAuthenticated, upload.single('file'), (req, res) => {
     const file = req.file
     const user = req.user;
     if (!file) {
@@ -30,12 +30,12 @@ router.post('/upload', ensureAuthenticated, upload.single('myFile'), (req, res) 
         return next(error)
     }
     const newFile = new RestrictedFile({
+        name: file.originalname,
         userID: req.user._id,
         writeUsers: ['Admin', req.user._id],
         readUsers: ['Admin', req.user._id],
         publishUsers: ['Admin', req.user._id],
     });
-    console.log('This is sparta', newFile)
     newFile.save()
     req.flash('success_msg', 'File uploaded')
     res.redirect('/dashboard')

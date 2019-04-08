@@ -11,7 +11,7 @@ require('./config/passport')(passport);
 
 const db = require('./config/keys').MongoURI;
 
-mongoose.connect("mongodb://localhost/mydb", { useNewUrlPerser: true })
+mongoose.connect("mongodb://localhost/transferdb", { useNewUrlPerser: true })
     .then(() => console.log('MongoDB Connected...'))
     .catch(err => console.log(err))
 

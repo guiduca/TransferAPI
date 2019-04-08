@@ -5,6 +5,10 @@ const RestrictedFileSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
+    name:{
+        type: String,
+        required: true,
+    },
     description: {
         type: String,
         required: false,

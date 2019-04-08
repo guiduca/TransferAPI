@@ -13,7 +13,6 @@ router.get('/dashboard', ensureAuthenticated, (req, res) => {
         files.forEach(function (file) {
             fileMap.push(file)
         });
-        console.log(fileMap)
         res.render('dashboard', {
             fileMap
         });

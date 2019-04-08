@@ -1,13 +1,13 @@
 <h1 class="mt-4">Dashboard</h1>
 <% include ./partials/messages %>
 <form action="/files/upload" enctype="multipart/form-data" method="POST"> 
-    <input type="file" name="myFile" />
+    <input type="file" name="file" />
     <input type="submit" value="Upload a file"/>
  </form>
  <ul class="list-group">
  <%if(typeof fileMap != 'undefined') { %>
     <%fileMap.forEach(function(file) { %>
-    <li class="list-group-item list-group-item-dark"><%= file._id %></li>
+    <li class="list-group-item list-group-item-dark"><%= file.name %></li>
     <%})%>
  <%}%>
   </ul>
