@@ -23,24 +23,24 @@ const RestrictedFileSchema = new mongoose.Schema({
     },
 });
 
-RestrictedFileSchema.methods.addUser(username: String, rights { r: Boolean, w: Boolean, x: Boolean }) {
-    if (r && this.writeUsers.indexof(username) !== -1) { 
-        this.writeUsers.push(username);
+RestrictedFileSchema.methods.addUser(userID: String, rights { r: Boolean, w: Boolean, x: Boolean }) {
+    if (r && this.writeUsers.indexof(userID) !== -1) { 
+        this.writeUsers.push(userID);
     }
-    if (w && this.readUsers.indexof(username) !== -1)  { 
-        this.readUsers.push(username);
+    if (w && this.readUsers.indexof(userID) !== -1)  { 
+        this.readUsers.push(userID);
      
     }
-    if (x && this.publishUsers.indexof(username) !== -1) { 
-        this.publishUsers.push(username);
+    if (x && this.publishUsers.indexof(userID) !== -1) { 
+        this.publishUsers.push(userID);
     }
 }
 
-RestrictedFileSchema.methods.canAccess(username: String) {
+RestrictedFileSchema.methods.canAccess(userID: String) {
     return ({
-        r: this.writeUsers.indexof(username) !== -1,
-        w: this.readUsers.indexof(username) !== -1,
-        x: this.publishUsers.indexof(username) !== -1,
+        r: this.writeUsers.indexof(userID) !== -1,
+        w: this.readUsers.indexof(userID) !== -1,
+        x: this.publishUsers.indexof(userID) !== -1,
     });
 }
 
