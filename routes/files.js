@@ -17,19 +17,15 @@ var storage = multer.diskStorage({
 var upload = multer({ storage: storage })
 
 router.post('/upload', ensureAuthenticated, upload.single('myFile'), (req, res) => {
-    const { originalname, uploader } = req.body;
-    // console.log(req.body)
     const file = req.file
-    const newFile = new File({
-        originalname,
-        uploader
-    })
-    newFile.save()
-        .then(file => {
-            req.flash('success_msg', 'File uploaded')
-        })
-        .catch(err => console.log(err));
-    res.send(file)
+    if (!file) {
+        const error = new Error('Please upload a file')
+        error.httpStatusCode = 400
+        return next(error)
+    }
+    const newFile = new 
+    req.flash('success_msg', 'File uploaded')
+    res.redirect('/dashboard')
 })
 
 module.exports = router;

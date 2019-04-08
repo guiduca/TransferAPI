@@ -1,14 +1,14 @@
 const mongoose = require('mongoose');
 
 const RestrictedFileSchema = new mongoose.Schema({
-    name: {
+    userID: {
         type: String,
         required: true,
     },
     description: {
         type: String,
         required: false,
-    }
+    },
     writeUsers: {
         type: [String],
         required: ['Admin'],
@@ -23,20 +23,20 @@ const RestrictedFileSchema = new mongoose.Schema({
     },
 });
 
-RestrictedFileSchema.methods.addUser(userID: String, rights { r: Boolean, w: Boolean, x: Boolean }) {
-    if (r && this.writeUsers.indexof(userID) !== -1) { 
+RestrictedFileSchema.methods.addUser = (userID, rights) => { r: Boolean, w: Boolean, x: Boolean }) {
+    if (r && this.writeUsers.indexof(userID) !== -1) {
         this.writeUsers.push(userID);
     }
-    if (w && this.readUsers.indexof(userID) !== -1)  { 
+    if (w && this.readUsers.indexof(userID) !== -1) {
         this.readUsers.push(userID);
-     
+
     }
-    if (x && this.publishUsers.indexof(userID) !== -1) { 
+    if (x && this.publishUsers.indexof(userID) !== -1) {
         this.publishUsers.push(userID);
     }
 }
 
-RestrictedFileSchema.methods.canAccess(userID: String) {
+RestrictedFileSchema.methods.canAccess =(userID) => {
     return ({
         r: this.writeUsers.indexof(userID) !== -1,
         w: this.readUsers.indexof(userID) !== -1,
