@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const { ensureAuthenticated } = require('../config/auth');
 const multer = require('multer');
+const path = require('path');
 
 const RestrictedFile = require('../models/RestrictedFile')
 
@@ -10,13 +11,14 @@ var storage = multer.diskStorage({
         cb(null, 'uploads')
     },
     filename: function (req, file, cb) {
-        cb(null, file.fieldname + '-' + Date.now())
+        cb(null, file.originalname)
     }
 })
 
 var upload = multer({ storage: storage })
 
-router.post('/upload', ensureAuthenticated, upload.single('file'), (req, res) => {
+router.post('/upload', ensureAuthenticated, upload.single('file'), (req, res, next) => {
+    console.log(req.file)
     const file = req.file
     const user = req.user;
     if (!file) {
@@ -31,7 +33,7 @@ router.post('/upload', ensureAuthenticated, upload.single('file'), (req, res) =>
     }
     const newFile = new RestrictedFile({
         name: file.originalname,
-        userID: req.user._id,
+        uploader: req.user.name,
         writeUsers: ['Admin', req.user._id],
         readUsers: ['Admin', req.user._id],
         publishUsers: ['Admin', req.user._id],
@@ -40,5 +42,11 @@ router.post('/upload', ensureAuthenticated, upload.single('file'), (req, res) =>
     req.flash('success_msg', 'File uploaded')
     res.redirect('/dashboard')
 })
+
+router.get('/download/:file(*)', ensureAuthenticated, (req, res) => {
+        var file = req.params.file;
+        var fileLocation = path.join('./uploads', file);
+        res.download(fileLocation, file);
+});
 
 module.exports = router;

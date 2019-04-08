@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 const RestrictedFileSchema = new mongoose.Schema({
-    userID: {
+    uploader: {
         type: String,
         required: true,
     },
@@ -25,6 +25,10 @@ const RestrictedFileSchema = new mongoose.Schema({
         type: [String],
         default: ['Admin'],
     },
+    date: {
+        type: Date,
+        default: Date.now
+    }
 });
 
 RestrictedFileSchema.methods.addUser = (userID, rights = { r, w, x }) => {

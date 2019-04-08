@@ -1,14 +1,18 @@
 <h1 class="mt-4">Dashboard</h1>
 <% include ./partials/messages %>
-<form action="/files/upload" enctype="multipart/form-data" method="POST"> 
+<form action="/files/upload" enctype="multipart/form-data" method="POST">
     <input type="file" name="file" />
-    <input type="submit" value="Upload a file"/>
- </form>
- <ul class="list-group">
- <%if(typeof fileMap != 'undefined') { %>
+    <input type="submit" value="Upload a file" />
+</form>
+<ul class="list-group">
+    <%if(typeof fileMap != 'undefined') { %>
     <%fileMap.forEach(function(file) { %>
-    <li class="list-group-item list-group-item-dark"><%= file.name %></li>
+    <div class="card border-info mb-3" style="max-width: 18rem;">
+        <div class="card-header"><%= file.name %> <a href="files/download/<%=file.name%>" ><i class="fas fa-download" style="margin-left: 5px;"></i></a></div>
+        <p class="card-title">Uploaded <%= file.date %></p>
+        <p class="card-text">by <%= file.uploader%></p>
+    </div>
     <%})%>
- <%}%>
+    <%}%>
   </ul>
 <a href="/users/login" class="btn btn-secondary">Logout</a>
