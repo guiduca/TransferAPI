@@ -35,7 +35,7 @@ router.post('/upload', ensureAuthenticated, upload.single('myFile'), (req, res) 
         readUsers: ['Admin', req.user._id],
         publishUsers: ['Admin', req.user._id],
     });
-    console.log('This is sparta', newFile )
+    console.log('This is sparta', newFile)
     newFile.save()
     req.flash('success_msg', 'File uploaded')
     res.redirect('/dashboard')
