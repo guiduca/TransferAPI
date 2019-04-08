@@ -79,7 +79,7 @@ router.post('/login', (req, res, next) => {
     })(req, res, next);
 })
 
-router.get('/get', (req, res) => {
+router.get('/', (req, res) => {
     req.logOut();
     req.flash('success_msg', 'You are looged out');
     res.redirect('/users/login');

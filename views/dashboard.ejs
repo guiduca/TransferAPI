@@ -1,3 +1,6 @@
 <h1 class="mt-4">Dashboard</h1>
-<p class="lead mb-3">Welcome</p>
+<form action="/files/upload" enctype="multipart/form-data" method="POST"> 
+    <input type="file" name="myFile" />
+    <input type="submit" value="Upload a file"/>
+ </form>
 <a href="/users/login" class="btn btn-secondary">Logout</a>
