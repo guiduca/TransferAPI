@@ -18,7 +18,7 @@ const RestrictedFileSchema = new mongoose.Schema({
         required: ['Admin'],
     },
     readUsers: {
-        type: String,
+        type: [String],
         required: ['Admin'],
     },
     publishUsers: {
