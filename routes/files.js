@@ -18,9 +18,7 @@ var storage = multer.diskStorage({
 var upload = multer({ storage: storage })
 
 router.post('/upload', ensureAuthenticated, upload.single('file'), (req, res, next) => {
-    console.log(req.file)
     const file = req.file
-    const user = req.user;
     if (!file) {
         const error = new Error('Please upload a file')
         error.httpStatusCode = 400
@@ -44,9 +42,9 @@ router.post('/upload', ensureAuthenticated, upload.single('file'), (req, res, ne
 })
 
 router.get('/download/:file(*)', ensureAuthenticated, (req, res) => {
-        var file = req.params.file;
-        var fileLocation = path.join('./uploads', file);
-        res.download(fileLocation, file);
+    var file = req.params.file;
+    var fileLocation = path.join('./uploads', file);
+    res.download(fileLocation, file);
 });
 
 module.exports = router;
