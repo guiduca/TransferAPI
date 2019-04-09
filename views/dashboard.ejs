@@ -15,6 +15,7 @@
         </div>
         <p class="card-title">Uploaded <%= file.date %></p>
         <p class="card-text">by <%= file.uploader%></p>
+        <a href="/files/permission/<%=file._id%>" class="btn btn-primary btn-block mb-2">Manage permission</a>
     </div>
     <%})%>
     <%}%>

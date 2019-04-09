@@ -4,6 +4,7 @@ const { ensureAuthenticated } = require('../config/auth');
 const multer = require('multer');
 const path = require('path');
 
+const User = require('../models/Users')
 const RestrictedFile = require('../models/RestrictedFile')
 
 var storage = multer.diskStorage({
@@ -46,5 +47,30 @@ router.get('/download/:file(*)', ensureAuthenticated, (req, res) => {
     var fileLocation = path.join('./uploads', file);
     res.download(fileLocation, file);
 });
+
+router.get('/permission/:id', (req, res) => {
+    const fileId = req.params.id
+    res.render('permission', {
+        fileId
+    })
+})
+
+router.post('/permission', (req, res) => {
+    RestrictedFile.findOne({ _id: req.body.fileId })
+        .then(file => {
+            User.find({ name: req.body.name })
+                .then(user => {
+                    if (user.length) {
+                        file.readUsers.push(user._id);
+                        file.save();
+                        req.flash('success_msg', req.body.name + ' have been added to the readers of ' + req.body.fileId)
+                        res.redirect('/dashboard');
+                    } else {
+                        req.flash('error_msg', req.body.name + ' not found as user')
+                        res.redirect('/dashboard');
+                    }
+                })
+        })
+})
 
 module.exports = router;

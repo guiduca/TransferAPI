@@ -1,0 +1,21 @@
+<div class="row mt-5">
+    <div class="col-md-6 m-auto">
+        <% include ./partials/messages %>
+        <form action="/files/permission" method="POST">
+            <div class="form-group">
+                <label for="fileId">File</label>
+                <input type="name" id="fileId" name="fileId" class="form-control" value="<%=fileId%>" />
+            </div>
+            <div class="form-group">
+                <label for="name">Name</label>
+                <input type="name" id="name" name="name" class="form-control" placeholder="Enter Name" />
+            </div>
+            <button type="submit" class="btn btn-primary btn-block">
+                add right
+            </button>
+        </form>
+        <div class="card card-body text-center">
+            <a href="/dashboard" class="btn btn-primary btn-block mb-2">Back to dashboard</a>
+        </div>
+    </div>
+</div>
