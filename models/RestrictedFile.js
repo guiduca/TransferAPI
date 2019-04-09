@@ -32,24 +32,32 @@ const RestrictedFileSchema = new mongoose.Schema({
 });
 
 RestrictedFileSchema.methods.addUser = (userID, rights = { r, w, x }) => {
-    if (rights.r && this.writeUsers.indexof(userID) !== -1) {
+    if (rights.r && this.writeUsers.indexOf(userID) !== -1) {
         this.writeUsers.push(userID);
     }
-    if (rights.w && this.readUsers.indexof(userID) !== -1) {
+    if (rights.w && this.readUsers.indexOf(userID) !== -1) {
         this.readUsers.push(userID);
 
     }
-    if (rights.x && this.publishUsers.indexof(userID) !== -1) {
+    if (rights.x && this.publishUsers.indexOf(userID) !== -1) {
         this.publishUsers.push(userID);
     }
 }
 
-RestrictedFileSchema.methods.canAccess =(userID) => {
+RestrictedFileSchema.methods.getUserRightsOnFile = function(userID) {
     return ({
-        r: this.writeUsers.indexof(userID) !== -1,
-        w: this.readUsers.indexof(userID) !== -1,
-        x: this.publishUsers.indexof(userID) !== -1,
+        r: this.writeUsers.indexOf(userID) !== -1,
+        w: this.readUsers.indexOf(userID) !== -1,
+        x: this.publishUsers.indexOf(userID) !== -1,
     });
+}
+
+RestrictedFileSchema.methods.canAccess = function(userID) {
+    if (this.readUsers.indexOf(userID) !== -1 ||
+        this.writeUsers.indexOf(userID) !== -1 || 
+        this.publishUsers.indexOf(userID))
+        return true;
+    return false;
 }
 
 const RestrictedFile = mongoose.model('RestrictedFile', RestrictedFileSchema)

@@ -8,10 +8,12 @@ router.get('/', (req, res) => res.render('welcome'))
 
 router.get('/dashboard', ensureAuthenticated, (req, res) => {
     RestrictedFile.find({}, function (err, files) {
-        var fileMap = [];
-
+        let fileMap = [];
+        let usrId = req && req.user ? req.user._id : null;
+        
         files.forEach(function (file) {
-            fileMap.push(file)
+            if (file.canAccess(usrId))
+                fileMap.push(file)
         });
         res.render('dashboard', {
             fileMap
