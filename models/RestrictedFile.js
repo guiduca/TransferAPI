@@ -55,7 +55,7 @@ RestrictedFileSchema.methods.getUserRightsOnFile = function(userID) {
 RestrictedFileSchema.methods.canAccess = function(userID) {
     if (this.readUsers.indexOf(userID) !== -1 ||
         this.writeUsers.indexOf(userID) !== -1 || 
-        this.publishUsers.indexOf(userID))
+        this.publishUsers.indexOf(userID) !== -1)
         return true;
     return false;
 }
